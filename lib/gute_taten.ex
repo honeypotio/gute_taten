@@ -1,0 +1,2 @@
+defmodule GuteTaten do
+end
