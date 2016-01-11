@@ -1,20 +1,27 @@
 # GuteTaten
 
-**TODO: Add description**
+A tool to parse "meaningfull" open source contributions
+out of forks and private notes on a github profile
 
-## Installation
+## Usage
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+```shell
+mix taten duksis # returns a list of contributions for github user "duksis"
+```
 
-  1. Add gute_taten to your list of dependencies in `mix.exs`:
+License
+-------
 
-        def deps do
-          [{:gute_taten, "~> 0.0.1"}]
-        end
+Copyright © 2016 Honeypot GmbH.
 
-  2. Ensure gute_taten is started before your application:
+It is free software, and may be redistributed under the terms specified in
+the LICENSE file.
 
-        def application do
-          [applications: [:gute_taten]]
-        end
 
+About Honeypot
+--------------
+
+![Honeypot](https://www.honeypot.io/logo.png)
+
+Honeypot is a developer focused job platform.
+The names and logos for Honeypot are trademarks of Honeypot GmbH.
