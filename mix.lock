@@ -4,10 +4,11 @@
   "exjsx": {:hex, :exjsx, "3.2.0"},
   "exvcr": {:hex, :exvcr, "0.7.0"},
   "hackney": {:hex, :hackney, "1.4.8"},
-  "httpoison": {:hex, :httpoison, "0.8.0"},
+  "httpoison": {:hex, :httpoison, "0.8.1"},
   "idna": {:hex, :idna, "1.0.3"},
   "jsx": {:hex, :jsx, "2.6.2"},
   "meck": {:hex, :meck, "0.8.4"},
   "mimerl": {:hex, :mimerl, "1.0.2"},
+  "mock": {:hex, :mock, "0.1.1"},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
-  "tentacat": {:hex, :tentacat, "0.3.1"}}
+  "tentacat": {:git, "https://github.com/duksis/tentacat.git", "2fce1c0ab3d034f4df2c55529a6191e1f25368d8", [branch: "user_events"]}}
