@@ -5,6 +5,8 @@ defmodule GuteTaten.Mixfile do
     [app: :gute_taten,
      version: "0.0.1",
      elixir: "~> 1.2",
+     description: description,
+     package: package,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      test_coverage: [tool: ExCoveralls],
@@ -34,5 +36,21 @@ defmodule GuteTaten.Mixfile do
      {:excoveralls, "~> 0.4", only: :test},
      {:mock, "~> 0.1.1", only: :test},
      {:exvcr, "~> 0.6", only: :test} ]
+  end
+
+  defp description do
+    """
+    A tool to parse "meaningfull" open source contributions
+    out of forks and private notes on a github profile
+    """
+  end
+
+  defp package do
+    [
+      files: ["lib", "priv", "mix.exs", "README*", "LICENSE*"],
+      maintainers: ["Hugo Duksis"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/hoenypotio/gute_taten"}
+    ]
   end
 end
