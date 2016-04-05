@@ -11,4 +11,4 @@
   "mimerl": {:hex, :mimerl, "1.0.2"},
   "mock": {:hex, :mock, "0.1.1"},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
-  "tentacat": {:git, "https://github.com/edgurgel/tentacat.git", "223d306f79134202175f8013222178d825494887", []}}
+  "tentacat": {:hex, :tentacat, "0.5.0"}}

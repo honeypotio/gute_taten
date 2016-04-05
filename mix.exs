@@ -31,11 +31,12 @@ defmodule GuteTaten.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [#{:tentacat, "~> 0.2"},
-      {:tentacat, github: "edgurgel/tentacat"},
-     {:excoveralls, "~> 0.4", only: :test},
-     {:mock, "~> 0.1.1", only: :test},
-     {:exvcr, "~> 0.6", only: :test} ]
+    [
+      {:tentacat, "~> 0.5"},
+      {:excoveralls, "~> 0.4", only: :test},
+      {:mock, "~> 0.1.1", only: :test},
+      {:exvcr, "~> 0.6", only: :test}
+    ]
   end
 
   defp description do
