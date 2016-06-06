@@ -10,7 +10,6 @@ defmodule GuteTaten do
 
   @spec retrieve(binary) :: binary
   def retrieve(github_identity) do
-    Tentacat.start
     github_identity
       |> search_deeds
       |> format_output
