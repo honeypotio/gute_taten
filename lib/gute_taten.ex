@@ -6,7 +6,7 @@ defmodule GuteTaten do
       GuteTaten.retrieve("duksis")
   """
 
-  @rules ["UsefullProjects", "GivingBackTheLove"]
+  @rules Application.get_env(:gute_taten, :rules)
 
   @spec retrieve(binary) :: binary
   def retrieve(github_identity) do
