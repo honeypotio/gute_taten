@@ -3,22 +3,23 @@ defmodule GuteTaten.GivingBackTheLoveTest do
 
   doctest GuteTaten.GivingBackTheLove
 
-  def api_double_module(name) do
+  def api_double_module(name, value) do
     module = Module.concat(__MODULE__, name)
     contents = quote do
-      def call(_module, _fun, _args) do
-        [%{
-          "type" => "PullRequestEvent",
-          "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/RoxasShadow/devise_invitations"}}
-        }]
-      end
+      def call(_module, _fun, _args), do: unquote(Macro.escape(value))
     end
     Module.create(module, contents, Macro.Env.location(__ENV__))
     module
   end
 
   test "filters PR's" do
-    api_double = api_double_module("FiltersPRs")
+    api_response = [
+      %{
+        "type" => "PullRequestEvent",
+        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/RoxasShadow/devise_invitations"}}
+      }
+    ]
+    api_double = api_double_module("FiltersPRs", api_response)
     expected_output = [%{
       name: "Is contributing back",
       reference: "https://github.com/RoxasShadow/devise_invitations"
