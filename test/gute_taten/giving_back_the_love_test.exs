@@ -8,8 +8,8 @@ defmodule GuteTaten.GivingBackTheLoveTest do
     contents = quote do
       def call(mod, fun, args) do
         case [mod, fun, args] do
-          [Tentacat.Pulls, :has_been_merged, [_, "devise", "1"]] -> {204, "Merged"}
-          [Tentacat.Pulls, :has_been_merged, _] -> {404, "Not Found"}
+          [[:Tentacat, :Pulls], :has_been_merged, [_, "devise", "1"]] -> {204, "Merged"}
+          [[:Tentacat, :Pulls], :has_been_merged, _] -> {404, "Not Found"}
           _ -> unquote(Macro.escape(value))
         end
       end
