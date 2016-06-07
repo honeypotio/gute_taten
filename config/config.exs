@@ -22,5 +22,6 @@ config :gute_taten, rules: ["UsefullProjects", "GivingBackTheLove"]
 #
 #     config :logger, level: :info
 #
-
-import_config "#{Mix.env}.exs"
+if Mix.env == :test do
+  import_config "#{Mix.env}.exs"
+end
