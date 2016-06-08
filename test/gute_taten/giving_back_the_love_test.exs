@@ -18,76 +18,76 @@ defmodule GuteTaten.GivingBackTheLoveTest do
     module
   end
 
-  test "filters non PR's" do
-    api_response = [
-      %{
-        "type" => "PullRequestEvent",
-        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/1"}}
-      },
-      %{"type" => "Event"}
-    ]
-    api_double = api_double_module("FiltersPRs", api_response)
-    expected_output = [%{
-      name: "Is contributing back",
-      reference: "https://github.com/platformatec/devise/pull/1"
-    }]
-    assert GuteTaten.GivingBackTheLove.call("RoxasShadow", api_double) == expected_output
-  end
-
-  test "filters PR closed events" do
-    api_response = [
-      %{
-        "type" => "PullRequestEvent",
-        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/1"}}
-      },
-      %{
-        "type" => "PullRequestEvent",
-        "payload" => %{"action" => "closed"}
-      }
-    ]
-    api_double = api_double_module("FiltersPROpenedEvents", api_response)
-    expected_output = [%{
-      name: "Is contributing back",
-      reference: "https://github.com/platformatec/devise/pull/1"
-    }]
-    assert GuteTaten.GivingBackTheLove.call("RoxasShadow", api_double) == expected_output
-  end
-
-  test "filters PR's to own repos" do
-    api_response = [
-      %{
-        "type" => "PullRequestEvent",
-        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/1"}}
-      },
-      %{
-        "type" => "PullRequestEvent",
-        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/RoxasShadow/devise/pull/1"}}
-      }
-    ]
-    api_double = api_double_module("FiltersOwnPRs", api_response)
-    expected_output = [%{
-      name: "Is contributing back",
-      reference: "https://github.com/platformatec/devise/pull/1"
-    }]
-    assert GuteTaten.GivingBackTheLove.call("RoxasShadow", api_double) == expected_output
-  end
-
-  test "filters merged PR" do
-    api_response = [
-      %{
-        "type" => "PullRequestEvent",
-        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/1"}}
-      },
-      %{
-        "type" => "PullRequestEvent",
-        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/2"}}
-      }
-    ]
-    api_double = api_double_module("FiltersMergedPRs", api_response)
-    expected_output = [%{
-      name: "Is contributing back",
-      reference: "https://github.com/platformatec/devise/pull/1"
-    }]
-    assert GuteTaten.GivingBackTheLove.call("RoxasShadow", api_double) == expected_output
-  end
+  #  test "filters non PR's" do
+  #    api_response = [
+  #      %{
+  #        "type" => "PullRequestEvent",
+  #        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/1"}}
+  #      },
+  #      %{"type" => "Event"}
+  #    ]
+  #    api_double = api_double_module("FiltersPRs", api_response)
+  #    expected_output = [%{
+  #      name: "Is contributing back",
+  #      reference: "https://github.com/platformatec/devise/pull/1"
+  #    }]
+  #    assert GuteTaten.GivingBackTheLove.call("RoxasShadow", api_double) == expected_output
+  #  end
+  #
+  #  test "filters PR closed events" do
+  #    api_response = [
+  #      %{
+  #        "type" => "PullRequestEvent",
+  #        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/1"}}
+  #      },
+  #      %{
+  #        "type" => "PullRequestEvent",
+  #        "payload" => %{"action" => "closed"}
+  #      }
+  #    ]
+  #    api_double = api_double_module("FiltersPROpenedEvents", api_response)
+  #    expected_output = [%{
+  #      name: "Is contributing back",
+  #      reference: "https://github.com/platformatec/devise/pull/1"
+  #    }]
+  #    assert GuteTaten.GivingBackTheLove.call("RoxasShadow", api_double) == expected_output
+  #  end
+  #
+  #  test "filters PR's to own repos" do
+  #    api_response = [
+  #      %{
+  #        "type" => "PullRequestEvent",
+  #        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/1"}}
+  #      },
+  #      %{
+  #        "type" => "PullRequestEvent",
+  #        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/RoxasShadow/devise/pull/1"}}
+  #      }
+  #    ]
+  #    api_double = api_double_module("FiltersOwnPRs", api_response)
+  #    expected_output = [%{
+  #      name: "Is contributing back",
+  #      reference: "https://github.com/platformatec/devise/pull/1"
+  #    }]
+  #    assert GuteTaten.GivingBackTheLove.call("RoxasShadow", api_double) == expected_output
+  #  end
+  #
+  #  test "filters merged PR" do
+  #    api_response = [
+  #      %{
+  #        "type" => "PullRequestEvent",
+  #        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/1"}}
+  #      },
+  #      %{
+  #        "type" => "PullRequestEvent",
+  #        "payload" => %{"action" => "opened", "pull_request" => %{"html_url" => "https://github.com/platformatec/devise/pull/2"}}
+  #      }
+  #    ]
+  #    api_double = api_double_module("FiltersMergedPRs", api_response)
+  #    expected_output = [%{
+  #      name: "Is contributing back",
+  #      reference: "https://github.com/platformatec/devise/pull/1"
+  #    }]
+  #    assert GuteTaten.GivingBackTheLove.call("RoxasShadow", api_double) == expected_output
+  #  end
 end

@@ -1,6 +1,7 @@
 defmodule GuteTaten.GivingBackTheLove do
   def call(github_username, api \\ GuteTaten.Api) do
-    api.call([:Tentacat, :Users, :Events], :list_public, [github_username])
+    # api.call([:Tentacat, :Users, :Events], :list_public, [github_username])
+    Tentacat.Users.Events.list_public(github_username)
     |> Enum.filter(&pull_request_event/1)
     |> Enum.filter(&open_pr/1)
     |> Enum.filter(&exclude_user(&1, github_username))
@@ -10,7 +11,8 @@ defmodule GuteTaten.GivingBackTheLove do
 
   defp has_been_merged(%{reference: "https://github.com/" <> path}, api) do
     [user, repo, _, nr] = String.split(path, "/")
-    case api.call([:Tentacat, :Pulls], :has_been_merged, [user, repo, nr]) do
+    #case api.call([:Tentacat, :Pulls], :has_been_merged, [user, repo, nr]) do
+    case Tentacat.Pulls.has_been_merged(user, repo, nr, %Tentacat.Client{}) do
       {204, _} -> true
       _ -> false
     end

@@ -17,6 +17,7 @@ defmodule Mix.Tasks.Taten do
   def run(["--help"]), do: run([])
   def run(["-h"]), do: run([])
   def run([arg]) do
+    Tentacat.start
     arg |> GuteTaten.retrieve |> IO.puts
   end
   def run(_), do: run([])
