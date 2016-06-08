@@ -1,7 +1,8 @@
 defmodule GuteTaten.GivingBackTheLove do
+
   def call(github_username, api \\ GuteTaten.Api) do
     # api.call([:Tentacat, :Users, :Events], :list_public, [github_username])
-    Tentacat.Users.Events.list_public(github_username)
+    Tentacat.Users.Events.list_public(github_username, client)
     |> Enum.filter(&pull_request_event/1)
     |> Enum.filter(&open_pr/1)
     |> Enum.filter(&exclude_user(&1, github_username))
@@ -12,7 +13,7 @@ defmodule GuteTaten.GivingBackTheLove do
   defp has_been_merged(%{reference: "https://github.com/" <> path}, api) do
     [user, repo, _, nr] = String.split(path, "/")
     #case api.call([:Tentacat, :Pulls], :has_been_merged, [user, repo, nr]) do
-    case Tentacat.Pulls.has_been_merged(user, repo, nr, %Tentacat.Client{}) do
+    case Tentacat.Pulls.has_been_merged(user, repo, nr, client) do
       {204, _} -> true
       _ -> false
     end
@@ -31,6 +32,13 @@ defmodule GuteTaten.GivingBackTheLove do
       # https://github.com/elixir-lang/elixir/issues/3837
       %{"payload" => %{"pull_request" => %{"html_url" =>  <<^path::binary-size(path_size)>> <> _}}} -> false
       _ -> true
+    end
+  end
+
+  defp client do
+    case Application.get_env(:gute_taten, :github_token) do
+      nil -> %Tentacat.Client{}
+      token -> Tentacat.Client.new(%{access_token: token})
     end
   end
 end

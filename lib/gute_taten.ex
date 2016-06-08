@@ -6,7 +6,8 @@ defmodule GuteTaten do
       GuteTaten.retrieve("duksis")
   """
 
-  @rules Application.get_env(:gute_taten, :rules)
+  @default_rules ["UsefullProjects", "GivingBackTheLove"]
+  @rules Application.get_env(:gute_taten, :rules, @default_rules)
 
   @spec retrieve(binary) :: binary
   def retrieve(github_identity) do
@@ -15,9 +16,9 @@ defmodule GuteTaten do
       |> format_output
   end
 
-  @spec search_deeds(binary) :: [map]
-  defp search_deeds(github_username) do
-    Enum.map(@rules, fn(x) -> Module.concat(__MODULE__, x).call(github_username) end)
+  @spec search_deeds(binary, [binary]) :: [map]
+  defp search_deeds(github_username, rules \\ @rules) do
+    Enum.map(rules, fn(x) -> Module.concat(__MODULE__, x).call(github_username) end)
       |> List.flatten
   end
 
