@@ -2,7 +2,7 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :gute_taten, rules: ["UsefullProjects", "GivingBackTheLove"]
+config :gute_taten, rules: ["UsefulProjects", "GivingBackTheLove"]
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

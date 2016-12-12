@@ -6,7 +6,7 @@ defmodule GuteTaten do
       GuteTaten.retrieve("duksis")
   """
 
-  @default_rules ["UsefullProjects", "GivingBackTheLove"]
+  @default_rules ["UsefulProjects", "GivingBackTheLove"]
   @rules Application.get_env(:gute_taten, :rules, @default_rules)
 
   @spec retrieve(binary) :: binary

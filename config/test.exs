@@ -1,5 +1,5 @@
 use Mix.Config
 
 config :gute_taten,
-  rules: ["UsefullProjects"],
+  rules: ["UsefulProjects"],
   github_token: nil

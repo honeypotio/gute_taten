@@ -9,15 +9,15 @@ defmodule GuteTatenTest do
       json_output = """
       [
         {
-          "name": "Usefull project",
+          "name": "Useful project",
           "reference": "https://github.com/RoxasShadow/devise_invitations"
         },
         {
-          "name": "Usefull project",
+          "name": "Useful project",
           "reference": "https://github.com/RoxasShadow/Dumper"
         },
         {
-          "name": "Usefull project",
+          "name": "Useful project",
           "reference": "https://github.com/RoxasShadow/EDB"
         }
       ]\
