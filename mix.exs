@@ -18,7 +18,7 @@ defmodule GuteTaten.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :tentacat]]
+    [applications: [:logger, :tentacat, :postgrex, :ecto]]
   end
 
   # Dependencies can be Hex packages:
@@ -33,6 +33,9 @@ defmodule GuteTaten.Mixfile do
   defp deps do
     [
       {:tentacat, "~> 0.5"},
+      {:postgrex, ">= 0.0.0"},
+      {:ecto, "~> 2.1"},
+      {:poison, "~> 3.0"},
       {:excoveralls, "~> 0.4", only: :test},
       {:mock, "~> 0.1.1", only: :test},
       {:exvcr, "~> 0.6", only: :test}

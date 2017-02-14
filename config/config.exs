@@ -2,7 +2,18 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :gute_taten, rules: ["UsefulProjects", "GivingBackTheLove"]
+config :gute_taten,
+  rules: ["UsefulProjects", "GivingBackTheLove", "GivingBackTheLoveV2"],
+  github_token: System.get_env("GITHUB_TOKEN")
+
+
+config :gute_taten, ecto_repos: [Githubarchive.Repo]
+
+config :gute_taten, Githubarchive.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+  ssl: true
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

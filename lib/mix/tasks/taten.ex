@@ -17,7 +17,10 @@ defmodule Mix.Tasks.Taten do
   def run(["--help"]), do: run([])
   def run(["-h"]), do: run([])
   def run([arg]) do
+    [:postgrex, :ecto]
+    |> Enum.each(&Application.ensure_all_started/1)
     Tentacat.start
+    Githubarchive.Repo.start_link
     arg |> GuteTaten.retrieve |> IO.puts
   end
   def run(_), do: run([])
