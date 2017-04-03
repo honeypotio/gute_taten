@@ -4,7 +4,7 @@ defmodule GuteTaten.UsefulProjects do
     |> Tentacat.Repositories.list_users(client)
     |> Enum.filter(fn(x) -> Map.fetch!(x, "fork") == false end)
     |> Enum.filter(fn(x) -> Map.fetch!(x, "stargazers_count") >= 5 end)
-    |> Enum.map(fn(x) -> %{ name: "Useful project", reference: Map.fetch!(x, "html_url")} end)
+    |> Enum.map(fn(x) -> %{ name: "Useful project", reference: Map.fetch!(x, "html_url"), description: Map.fetch!(x, "description")} end)
   end
 
   defp client do
