@@ -11,17 +11,20 @@ defmodule GuteTatenTest do
         {
           "description": "Allow multiple invitations on top of devise_invitable",
           "name": "Useful project",
-          "reference": "https://github.com/RoxasShadow/devise_invitations"
+          "reference": "https://github.com/RoxasShadow/devise_invitations",
+          "stars": 10
         },
         {
           "description": "A dumper to download whole galleries from boards like 4chan, imagebam, mangaeden, deviantart, etc.",
           "name": "Useful project",
-          "reference": "https://github.com/RoxasShadow/Dumper"
+          "reference": "https://github.com/RoxasShadow/Dumper",
+          "stars": 22
         },
         {
           "description": "A framework to make and manage backups of your database",
           "name": "Useful project",
-          "reference": "https://github.com/RoxasShadow/EDB"
+          "reference": "https://github.com/RoxasShadow/EDB",
+          "stars": 105
         }
       ]\
       """
