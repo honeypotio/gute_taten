@@ -4,11 +4,11 @@ defmodule GuteTaten.GivingBackTheLoveV2 do
   alias Githubarchive.Repo
 
   def call(github_username, api \\ GuteTaten.Api) do
-    # api.call([:Tentacat, :Users, :Events], :list_public, [github_username])
     pull_request_open_events(github_username)
     |> Enum.filter(&exclude_user(&1, github_username))
-    |> Enum.map(fn(x) -> %Event{payload: %{"pull_request" => %{"html_url" => html_url}}} = x; %{ name: "Is contributing back", reference: html_url} end)
-    |> Enum.filter(&has_been_merged(&1, api))
+    |> Enum.map(&event_to_pr/1)
+    |> Enum.filter(&has_been_merged/1)
+    |> Enum.map(fn(x) -> %{ name: "Is contributing back", reference: Map.fetch!(x, "html_url"), description: description(x), stars: stars(x)} end)
   end
 
   defp pull_request_open_events(user) do
@@ -18,6 +18,11 @@ defmodule GuteTaten.GivingBackTheLoveV2 do
     Event
     |> where(fragment("actor ->> 'login' = ?", ^user))
     |> Repo.all
+  end
+
+  defp event_to_pr(%Event{payload: %{"pull_request" => %{"html_url" => "https://github.com/" <> path}}}) do
+    [user, repo, _, nr] = String.split(path, "/")
+    Tentacat.Pulls.find(user, repo, nr, client)
   end
 
   defp exclude_user(event, user) do
@@ -30,14 +35,12 @@ defmodule GuteTaten.GivingBackTheLoveV2 do
     end
   end
 
-  defp has_been_merged(%{reference: "https://github.com/" <> path}, api) do
-    [user, repo, _, nr] = String.split(path, "/")
-    #case api.call([:Tentacat, :Pulls], :has_been_merged, [user, repo, nr]) do
-    case Tentacat.Pulls.has_been_merged(user, repo, nr, client) do
-      {204, _} -> true
-      _ -> false
-    end
-  end
+  defp stars(%{"base" => %{"repo" => %{"stargazers_count" => star_count}}}), do: star_count
+
+  defp description(%{"base" => %{"repo" => %{"description" => desc}}}), do: desc
+
+  defp has_been_merged(%{"merged_at" => nil}), do: false
+  defp has_been_merged(%{"merged_at" => _}), do: true
 
   defp client do
     case Application.get_env(:gute_taten, :github_token) do
