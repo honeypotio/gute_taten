@@ -22,7 +22,11 @@ defmodule GuteTaten.GivingBackTheLoveV2 do
 
   defp event_to_pr(%Event{payload: %{"pull_request" => %{"html_url" => "https://github.com/" <> path}}}) do
     [user, repo, _, nr] = String.split(path, "/")
-    Tentacat.Pulls.find(user, repo, nr, client)
+    case Tentacat.Pulls.find(user, repo, nr, client) do
+      {301, %{"url" => url}} -> Tentacat._request(:get, url, client.auth)
+      {302, %{"url" => url}} -> Tentacat._request(:get, url, client.auth)
+      pr -> pr
+    end
   end
 
   defp exclude_user(event, user) do
