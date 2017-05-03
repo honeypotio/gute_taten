@@ -45,6 +45,7 @@ defmodule GuteTaten.GivingBackTheLoveV2 do
 
   defp has_been_merged(%{"merged_at" => nil}), do: false
   defp has_been_merged(%{"merged_at" => _}), do: true
+  defp has_been_merged(_), do: false
 
   defp client do
     case Application.get_env(:gute_taten, :github_token) do
