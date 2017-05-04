@@ -21,11 +21,15 @@ defmodule Mix.Tasks.Taten do
     |> Enum.each(&Application.ensure_all_started/1)
     Tentacat.start
     Githubarchive.Repo.start_link
-    arg |> GuteTaten.retrieve |> IO.puts
+    arg |> GuteTaten.retrieve |> Enum.map(&print/1)
   end
   def run(_), do: run([])
 
   defp usage do
     IO.puts @moduledoc
+  end
+
+  defp print(deed) do
+    JSX.encode!(deed) |> JSX.prettify! |> IO.puts
   end
 end

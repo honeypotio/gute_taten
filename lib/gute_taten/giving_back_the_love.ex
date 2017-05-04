@@ -1,13 +1,13 @@
 defmodule GuteTaten.GivingBackTheLove do
 
-  def call(github_username, api \\ GuteTaten.Api) do
+  def call(github_username, _api \\ GuteTaten.Api) do
     # api.call([:Tentacat, :Users, :Events], :list_public, [github_username])
-    Tentacat.Users.Events.list_public(github_username, client)
-    |> Enum.filter(&pull_request_event/1)
-    |> Enum.filter(&open_pr/1)
-    |> Enum.filter(&exclude_user(&1, github_username))
-    |> Enum.filter(&has_been_merged/1)
-    |> Enum.map(fn(x) -> %{ name: "Is contributing back", reference: html_url(x), description: description(x), stars: stars(x)} end)
+    list_public_events(github_username, client)
+    |> Stream.filter(&pull_request_event/1)
+    |> Stream.filter(&open_pr/1)
+    |> Stream.filter(&exclude_user(&1, github_username))
+    |> Stream.filter(&has_been_merged/1)
+    |> Stream.map(fn(x) -> %{ name: "Is contributing back", reference: html_url(x), description: description(x), stars: stars(x)} end)
   end
 
   defp has_been_merged(%{"merged_at" => nil}), do: false
@@ -33,6 +33,10 @@ defmodule GuteTaten.GivingBackTheLove do
       %{"payload" => %{"pull_request" => %{"html_url" =>  <<^path::binary-size(path_size)>> <> _}}} -> false
       _ -> true
     end
+  end
+
+  defp list_public_events(github_username, client) do
+    Tentacat.get("users/#{github_username}/events/public", client, [], [pagination: :stream])
   end
 
   defp client do

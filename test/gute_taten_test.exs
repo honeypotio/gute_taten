@@ -29,7 +29,11 @@ defmodule GuteTatenTest do
       ]\
       """
 
-      assert GuteTaten.retrieve("RoxasShadow") == json_output
+      assert Enum.to_list(GuteTaten.retrieve("RoxasShadow")) == JSX.decode!(json_output) |> Enum.map(&atomize_keys/1)
     end
+  end
+
+  defp atomize_keys(string_key_map) do
+    for {key, val} <- string_key_map, into: %{}, do: {String.to_atom(key), val}
   end
 end

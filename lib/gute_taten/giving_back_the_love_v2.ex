@@ -3,12 +3,12 @@ defmodule GuteTaten.GivingBackTheLoveV2 do
   alias Githubarchive.Event
   alias Githubarchive.Repo
 
-  def call(github_username, api \\ GuteTaten.Api) do
+  def call(github_username, _api \\ GuteTaten.Api) do
     pull_request_open_events(github_username)
-    |> Enum.filter(&exclude_user(&1, github_username))
-    |> Enum.map(&event_to_pr/1)
-    |> Enum.filter(&has_been_merged/1)
-    |> Enum.map(fn(x) -> %{ name: "Is contributing back", reference: Map.fetch!(x, "html_url"), description: description(x), stars: stars(x)} end)
+    |> Stream.filter(&exclude_user(&1, github_username))
+    |> Stream.map(&event_to_pr/1)
+    |> Stream.filter(&has_been_merged/1)
+    |> Stream.map(fn(x) -> %{ name: "Is contributing back", reference: Map.fetch!(x, "html_url"), description: description(x), stars: stars(x)} end)
   end
 
   defp pull_request_open_events(user) do
